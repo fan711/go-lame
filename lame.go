@@ -3,7 +3,7 @@ package lame
 // http://www.leidinger.net/lame/doxy/html/lame_8h-source.html
 
 /*
-#cgo CFLAGS: -DHAVE_CONFIG_H -I./clame
+#cgo CFLAGS: -DHAVE_CONFIG_H -I./clame -w
 #cgo LDFLAGS: -lm
 #include "lame.h"
 */
@@ -82,6 +82,14 @@ func (e *Encoder) SetVBRAverageBitRate(averageBitRate int) {
 
 func (e *Encoder) SetVBRQuality(quality int) {
 	C.lame_set_VBR_q(e.handle, C.int(quality))
+}
+
+func (e *Encoder) SetDisableReservoir(disable bool) {
+	i := 0
+	if disable {
+		i = 1
+	}
+	C.lame_set_disable_reservoir(e.handle, C.int(i))
 }
 
 func (e *Encoder) SetLowPassFrequency(frequency int) {
